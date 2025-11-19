@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tratamientos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 40px; }
+        .container { width: 80%; margin: 0 auto; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        h2 { text-align: center; }
+        a.btn { display: inline-block; padding: 8px 12px; color: white; border-radius: 5px; text-decoration: none; }
+        .btn-add { background-color: #28a745; margin-bottom: 15px; }
+        .btn-edit { background-color: #ffc107; }
+        .btn-delete { background-color: #dc3545; }
+        .btn-edit:hover { background-color: #e0a800; }
+        .btn-delete:hover { background-color: #c82333; }
+        .btn-add:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Lista de Tratamientos</h2>
+
+    <a href="/tratamientos/nuevo" class="btn btn-add">➕ Agregar Nuevo Tratamiento</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Costo (S/)</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${tratamientos}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.nombre}"></td>
+            <td th:text="${t.descripcion}"></td>
+            <td th:text="${t.tipo}"></td>
+            <td th:text="${t.costo}"></td>
+            <td>
+                <a th:href="@{/tratamientos/editar/{id}(id=${t.id})}" class="btn btn-edit">✏️ Editar</a>
+                <a th:href="@{/tratamientos/eliminar/{id}(id=${t.id})}"
+                   onclick="return confirm('¿Seguro que deseas eliminar este tratamiento?')"
+                   class="btn btn-delete">🗑️ Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

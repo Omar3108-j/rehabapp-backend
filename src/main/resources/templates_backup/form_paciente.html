@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Paciente</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 40px; }
+        .form-container { width: 50%; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; }
+        label { display: block; margin-top: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        button { margin-top: 15px; background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        a { display: inline-block; margin-top: 10px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2 th:text="${paciente.id == null} ? 'Nuevo Paciente' : 'Editar Paciente'"></h2>
+
+    <form th:action="@{/pacientes/guardar}" th:object="${paciente}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required/>
+
+        <label>Apellido:</label>
+        <input type="text" th:field="*{apellido}" required/>
+
+        <label>DNI:</label>
+        <input type="text" th:field="*{dni}" required maxlength="8"/>
+
+        <label>Edad:</label>
+        <input type="number" th:field="*{edad}" required/>
+
+        <label>Teléfono:</label>
+        <input type="text" th:field="*{telefono}" />
+
+        <label>Dirección:</label>
+        <input type="text" th:field="*{direccion}" />
+
+        <label>Correo:</label>
+        <input type="email" th:field="*{correo}" />
+
+        <button type="submit">💾 Guardar</button>
+    </form>
+
+    <a href="/pacientes">⬅️ Volver</a>
+</div>
+</body>
+</html>

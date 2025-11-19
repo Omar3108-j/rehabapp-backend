@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes Registrados</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 40px; }
+        .container { width: 80%; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; }
+        a.btn { padding: 8px 12px; color: white; border-radius: 5px; text-decoration: none; }
+        .btn-add { background: #28a745; }
+        .btn-edit { background: #ffc107; }
+        .btn-delete { background: #dc3545; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Pacientes Registrados</h2>
+    <a href="/pacientes/nuevo" class="btn btn-add">➕ Nuevo Paciente</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Edad</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pacientes}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.nombre}"></td>
+            <td th:text="${p.apellido}"></td>
+            <td th:text="${p.dni}"></td>
+            <td th:text="${p.edad}"></td>
+            <td th:text="${p.telefono}"></td>
+            <td th:text="${p.correo}"></td>
+            <td>
+                <a th:href="@{/pacientes/editar/{id}(id=${p.id})}" class="btn btn-edit">✏️ Editar</a>
+                <a th:href="@{/pacientes/eliminar/{id}(id=${p.id})}"
+                   onclick="return confirm('¿Eliminar este paciente?')"
+                   class="btn btn-delete">🗑️ Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
