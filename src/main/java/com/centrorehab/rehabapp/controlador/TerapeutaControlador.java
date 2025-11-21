@@ -1,44 +1,49 @@
 package com.centrorehab.rehabapp.controlador;
 
 import com.centrorehab.rehabapp.modelo.Terapeuta;
-import com.centrorehab.rehabapp.repositorio.TerapeutaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.centrorehab.rehabapp.servicio.TerapeutaServicio;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/terapeutas")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TerapeutaControlador {
 
-    @Autowired
-    private TerapeutaRepository terapeutaRepository;
+    private final TerapeutaServicio terapeutaServicio;
+
+    public TerapeutaControlador(TerapeutaServicio terapeutaServicio) {
+        this.terapeutaServicio = terapeutaServicio;
+    }
 
     @GetMapping
-    public List<Terapeuta> listarTerapeutas() {
-        return terapeutaRepository.findAll();
+    public List<Terapeuta> listar() {
+        return terapeutaServicio.listarTodos();
     }
 
     @PostMapping
-    public Terapeuta guardarTerapeuta(@RequestBody Terapeuta terapeuta) {
-        return terapeutaRepository.save(terapeuta);
+    public Terapeuta guardar(@RequestBody Terapeuta terapeuta) {
+        return terapeutaServicio.guardar(terapeuta);
+    }
+
+    @GetMapping("/{id}")
+    public Terapeuta obtener(@PathVariable Long id) {
+        return terapeutaServicio.obtenerPorId(id);
     }
 
     @PutMapping("/{id}")
-    public Terapeuta actualizarTerapeuta(@PathVariable Long id, @RequestBody Terapeuta terapeutaActualizado) {
-        Terapeuta terapeuta = terapeutaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
-        terapeuta.setNombre(terapeutaActualizado.getNombre());
-        terapeuta.setEspecialidad(terapeutaActualizado.getEspecialidad());
-        terapeuta.setTelefono(terapeutaActualizado.getTelefono());
-        return terapeutaRepository.save(terapeuta);
+    public Terapeuta actualizar(@PathVariable Long id, @RequestBody Terapeuta terapeuta) {
+        terapeuta.setId(id);
+        return terapeutaServicio.guardar(terapeuta);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarTerapeuta(@PathVariable Long id) {
-        terapeutaRepository.deleteById(id);
+    public void eliminar(@PathVariable Long id) {
+        terapeutaServicio.eliminar(id);
     }
 }
+
 
 
 
