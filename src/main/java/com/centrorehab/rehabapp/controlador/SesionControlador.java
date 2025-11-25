@@ -1,5 +1,6 @@
 package com.centrorehab.rehabapp.controlador;
 
+import com.centrorehab.rehabapp.dto.SesionDTO;
 import com.centrorehab.rehabapp.modelo.Sesion;
 import com.centrorehab.rehabapp.servicio.SesionServicio;
 import org.springframework.web.bind.annotation.*;
@@ -17,35 +18,37 @@ public class SesionControlador {
         this.sesionServicio = sesionServicio;
     }
 
-    @GetMapping
-    public List<Sesion> listar() {
-        return sesionServicio.listarTodas();
-    }
-
+    // Listar sesiones de un paciente (DTO)
     @GetMapping("/paciente/{id}")
-    public List<Sesion> listarPorPaciente(@PathVariable Long id) {
+    public List<SesionDTO> listarSesionesPorPaciente(@PathVariable Long id) {
         return sesionServicio.listarPorPaciente(id);
     }
 
+    // Obtener sesión por ID
     @GetMapping("/{id}")
-    public Sesion obtener(@PathVariable Long id) {
+    public Sesion obtenerPorId(@PathVariable Long id) {
         return sesionServicio.obtenerPorId(id);
     }
 
+    // Crear
     @PostMapping
-    public Sesion guardar(@RequestBody Sesion sesion) {
+    public Sesion crear(@RequestBody Sesion sesion) {
         return sesionServicio.guardar(sesion);
     }
 
+    // Actualizar
     @PutMapping("/{id}")
     public Sesion actualizar(@PathVariable Long id, @RequestBody Sesion sesion) {
         sesion.setId(id);
         return sesionServicio.guardar(sesion);
     }
 
+    // Eliminar
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
         sesionServicio.eliminar(id);
     }
 }
+
+
 
