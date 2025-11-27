@@ -1,5 +1,6 @@
 package com.centrorehab.rehabapp.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,16 +15,19 @@ public class Sesion {
 
     // RELACIÓN CORRECTA CON PACIENTE
     @ManyToOne
+    @JsonIgnoreProperties({"sesiones"})
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
     // RELACIÓN CORRECTA CON TERAPEUTA
     @ManyToOne
+    @JsonIgnoreProperties({"sesiones"})
     @JoinColumn(name = "terapeuta_id", nullable = false)
     private Terapeuta terapeuta;
 
     // RELACIÓN CORRECTA CON TRATAMIENTO
     @ManyToOne
+    @JsonIgnoreProperties({"sesiones"})
     @JoinColumn(name = "tratamiento_id", nullable = false)
     private Tratamiento tratamiento;
 
@@ -63,6 +67,7 @@ public class Sesion {
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
 }
+
 
 
 

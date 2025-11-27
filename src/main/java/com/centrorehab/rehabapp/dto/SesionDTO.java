@@ -9,9 +9,13 @@ public class SesionDTO {
     private String notas;
 
     private String terapeutaNombre;
-    private String tratamientoNombre;
+    private Long terapeutaId;
 
-    // Getters y setters
+    private String tratamientoNombre;
+    private Long tratamientoId;
+
+    public SesionDTO() {}
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -30,9 +34,17 @@ public class SesionDTO {
     public String getTerapeutaNombre() { return terapeutaNombre; }
     public void setTerapeutaNombre(String terapeutaNombre) { this.terapeutaNombre = terapeutaNombre; }
 
+    public Long getTerapeutaId() { return terapeutaId; }
+    public void setTerapeutaId(Long terapeutaId) { this.terapeutaId = terapeutaId; }
+
     public String getTratamientoNombre() { return tratamientoNombre; }
     public void setTratamientoNombre(String tratamientoNombre) { this.tratamientoNombre = tratamientoNombre; }
+
+    public Long getTratamientoId() { return tratamientoId; }
+    public void setTratamientoId(Long tratamientoId) { this.tratamientoId = tratamientoId; }
 }
+
+
 
 
 

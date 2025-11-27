@@ -6,6 +6,7 @@ import com.centrorehab.rehabapp.repositorio.SesionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SesionServicio {
@@ -16,7 +17,7 @@ public class SesionServicio {
         this.sesionRepository = sesionRepository;
     }
 
-    // Listar TODAS las sesiones
+    // Listar TODAS las sesiones (no DTO)
     public List<Sesion> listarTodas() {
         return sesionRepository.findAll();
     }
@@ -24,7 +25,7 @@ public class SesionServicio {
     // Listar sesiones por paciente → Devuelve DTO
     public List<SesionDTO> listarPorPaciente(Long pacienteId) {
 
-        return sesionRepository.findByPacienteId(pacienteId)
+        return sesionRepository.findByPacienteIdOrderByFechaDescHoraDesc(pacienteId)
                 .stream()
                 .map(s -> {
                     SesionDTO dto = new SesionDTO();
@@ -34,17 +35,20 @@ public class SesionServicio {
                     dto.setEstado(s.getEstado());
                     dto.setNotas(s.getNotas());
 
+                    // IDs de apoyo para editar sesión
                     if (s.getTerapeuta() != null) {
                         dto.setTerapeutaNombre(s.getTerapeuta().getNombre());
+                        dto.setTerapeutaId(s.getTerapeuta().getId());
                     }
 
                     if (s.getTratamiento() != null) {
                         dto.setTratamientoNombre(s.getTratamiento().getNombre());
+                        dto.setTratamientoId(s.getTratamiento().getId());
                     }
 
                     return dto;
                 })
-                .toList();
+                .collect(Collectors.toList());
     }
 
     // Guardar (crear o actualizar)
@@ -62,6 +66,7 @@ public class SesionServicio {
         sesionRepository.deleteById(id);
     }
 }
+
 
 
 
