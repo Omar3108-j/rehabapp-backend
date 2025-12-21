@@ -47,8 +47,16 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
+
+                        // 👇 ENDPOINTS DEL SISTEMA
+                        .requestMatchers("/api/pacientes/**").authenticated()
+                        .requestMatchers("/api/sesiones/**").authenticated()
+                        .requestMatchers("/api/terapeutas/**").authenticated()
+                        .requestMatchers("/api/tratamientos/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
+
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -13,60 +13,92 @@ public class Sesion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // RELACIÓN CORRECTA CON PACIENTE
-    @ManyToOne
-    @JsonIgnoreProperties({"sesiones"})
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Paciente paciente;
-
-    // RELACIÓN CORRECTA CON TERAPEUTA
-    @ManyToOne
-    @JsonIgnoreProperties({"sesiones"})
-    @JoinColumn(name = "terapeuta_id", nullable = false)
-    private Terapeuta terapeuta;
-
-    // RELACIÓN CORRECTA CON TRATAMIENTO
-    @ManyToOne
-    @JsonIgnoreProperties({"sesiones"})
-    @JoinColumn(name = "tratamiento_id", nullable = false)
-    private Tratamiento tratamiento;
-
-    @Column(nullable = false)
     private LocalDate fecha;
 
-    @Column(nullable = false)
     private LocalTime hora;
-
-    private String notas;
 
     private String estado;
 
-    public Sesion() {}
+    @Column(columnDefinition = "TEXT")
+    private String notas;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // =========== RELACIONES ===========
 
-    public Paciente getPaciente() { return paciente; }
-    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id")
+    @JsonIgnoreProperties({"sesiones"}) // evitar recursión infinita
+    private Paciente paciente;
 
-    public Terapeuta getTerapeuta() { return terapeuta; }
-    public void setTerapeuta(Terapeuta terapeuta) { this.terapeuta = terapeuta; }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "terapeuta_id")
+    @JsonIgnoreProperties({"sesiones"})
+    private Terapeuta terapeuta;
 
-    public Tratamiento getTratamiento() { return tratamiento; }
-    public void setTratamiento(Tratamiento tratamiento) { this.tratamiento = tratamiento; }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tratamiento_id")
+    @JsonIgnoreProperties({"sesiones"})
+    private Tratamiento tratamiento;
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    // =========== GETTERS & SETTERS ===========
 
-    public LocalTime getHora() { return hora; }
-    public void setHora(LocalTime hora) { this.hora = hora; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getNotas() { return notas; }
-    public void setNotas(String notas) { this.notas = notas; }
+    public LocalDate getFecha() {
+        return fecha;
+    }
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public LocalTime getHora() {
+        return hora;
+    }
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public Terapeuta getTerapeuta() {
+        return terapeuta;
+    }
+    public void setTerapeuta(Terapeuta terapeuta) {
+        this.terapeuta = terapeuta;
+    }
+
+    public Tratamiento getTratamiento() {
+        return tratamiento;
+    }
+    public void setTratamiento(Tratamiento tratamiento) {
+        this.tratamiento = tratamiento;
+    }
 }
+
+
 
 
 

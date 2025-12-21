@@ -57,14 +57,21 @@ public class PacienteControlador {
         }
 
         Paciente paciente = pacienteOpt.get();
+
         paciente.setNombre(datos.getNombre());
-        paciente.setDni(datos.getDni());
+        paciente.setApellido(datos.getApellido());
+        paciente.setCorreo(datos.getCorreo());
         paciente.setDireccion(datos.getDireccion());
+        paciente.setDni(datos.getDni());
         paciente.setTelefono(datos.getTelefono());
+        paciente.setEdad(datos.getEdad());
+        paciente.setFechaNacimiento(datos.getFechaNacimiento());
 
         Paciente actualizado = pacienteRepository.save(paciente);
+
         return ResponseEntity.ok(actualizado);
     }
+
 
     // Eliminar un paciente
     @DeleteMapping("/{id}")
